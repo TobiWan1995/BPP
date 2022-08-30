@@ -12,8 +12,8 @@ Im Branch "main" ist der überarbeitete, Micro-Service, zu finden.
 
 Die Entwicklung erfolgt in Kotlin.
 
-Der Service spiegelt den Use-Case eines Ticket-Systems wider. Dabei existieren unterschiedliche
-Typen von Tickets (Tages-, Wochen-, Monats-, Jahres-Ticket), wobei jedes dieser Tickets eine ähnliche Logik
+Der Service spiegelt den Use-Case eines Ticket-Systems für ein Event das über ein Wochenende stattfindet wider. Dabei existieren unterschiedliche
+Typen von Tickets mit unterschiedlichen Konditionen (Tages-, VIP-, Standard-Ticket), wobei jedes dieser Tickets eine ähnliche Logik
 im Service benötigt, die sich nur geringfügig unterscheidet. Die Attribute sind bei jedem Typ gleich und die Tickets
 werden über ein Typ-Attribut differenziert.
 

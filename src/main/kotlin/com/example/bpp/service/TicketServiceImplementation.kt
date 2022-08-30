@@ -4,6 +4,7 @@ import com.example.bpp.db.TicketRepository
 import com.example.bpp.mockKundenApi.MockKundenService
 import com.example.bpp.model.Ticket
 import com.example.bpp.model.TicketDto
+import com.example.bpp.model.Typ
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -16,18 +17,19 @@ class TicketServiceImplementation @Autowired constructor(var ticketRepository: T
     }
 
     override fun saveTicket(ticketDto: TicketDto): TicketDto {
-        return buildTicketDto(ticketRepository.save(Ticket(null, null, ticketDto.typ, ticketDto.gueltigVon, ticketDto.gueltigBis, ticketDto.preis, ticketDto.kunde?.id)))
+        val ticket = ticketRepository.save(Ticket(null, ticketDto.ticketNummer, Typ.valueOf(ticketDto.typ), ticketDto.gueltigVon, ticketDto.gueltigBis, ticketDto.preis, ticketDto.kunde?.id))
+        return buildTicketDto(ticket)
     }
 
     override fun updateTicket(ticketDto: TicketDto): TicketDto {
         // prüfe ob das Ticket existiert
-        val ticket = ticketRepository.findByTicketNummer(ticketDto.ticketNummer)
+        val ticket = ticketRepository.findByTicketNummer(ticketDto.ticketNummer!!)
             ?: throw RuntimeException("No such Element")
         // update Ticket
         ticket.gueltigBis = ticketDto.gueltigBis
         ticket.gueltigVon = ticketDto.gueltigVon
         ticket.preis = ticketDto.preis
-        ticket.typ = ticketDto.typ
+        ticket.typ = Typ.valueOf(ticketDto.typ)
         ticket.kundeId = ticketDto.kunde?.id
         return buildTicketDto(ticketRepository.save(ticket))
     }
@@ -39,6 +41,6 @@ class TicketServiceImplementation @Autowired constructor(var ticketRepository: T
     }
 
     fun buildTicketDto(ticket: Ticket): TicketDto {
-        return TicketDto(ticket.ticketNummer!!, ticket.typ, ticket.gueltigVon, ticket.gueltigBis, ticket.preis, mockKundenService.retrieveKundeByIdFromMockApi(ticket.kundeId))
+        return TicketDto(ticket.ticketNummer!!, ticket.typ.name, ticket.gueltigVon, ticket.gueltigBis, ticket.preis, mockKundenService.retrieveKundeByIdFromMockApi(ticket.kundeId))
     }
 }

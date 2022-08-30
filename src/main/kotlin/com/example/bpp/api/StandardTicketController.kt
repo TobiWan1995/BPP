@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 
-@Controller
+@RestController
 class StandardTicketController @Autowired constructor(val ticketService: TicketService) {
 
     @GetMapping("/standard/{nummer}")
@@ -15,14 +15,14 @@ class StandardTicketController @Autowired constructor(val ticketService: TicketS
     }
 
     @PostMapping("/standard")
-    fun createStandardTicket(ticketDto: TicketDto): TicketDto {
+    fun createStandardTicket(@RequestBody ticketDto: TicketDto): TicketDto {
         // berechnen des Preises -> Schlechtes Beispiel: Business-Logik die in den Controller gehört
         ticketDto.preis = 240.00;
         return ticketService.saveTicket(ticketDto)
     }
 
     @PutMapping("/standard")
-    fun updateStandardTicket(ticketDto: TicketDto): TicketDto {
+    fun updateStandardTicket(@RequestBody ticketDto: TicketDto): TicketDto {
         // berechnen des Preises -> Schlechtes Beispiel: Business-Logik die in den Controller gehört
         ticketDto.preis = 240.00;
         return ticketService.updateTicket(ticketDto)

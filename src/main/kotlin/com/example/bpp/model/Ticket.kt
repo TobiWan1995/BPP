@@ -1,9 +1,10 @@
 package com.example.bpp.model
 
-import com.sun.istack.NotNull
+import org.jetbrains.annotations.NotNull
 import java.time.LocalDateTime
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
 import javax.persistence.Id
 
 /* Es existieren 3 unterschiedliche Typen von Tickets mit anderen Konditionen für den Preis. Während ein Standardticket immer für ein
@@ -14,11 +15,11 @@ import javax.persistence.Id
 * den Typ jedes Tickets über den entsprechenden Faktor berechnet im Backend berechnet.*/
 @Entity
 class Ticket(
-    @Id @GeneratedValue @NotNull val id: Long? = null,
-    @NotNull @GeneratedValue val ticketNummer: Long? = null,
-    @NotNull var typ: Typ = Typ.STANDARD,
-    @NotNull var gueltigVon: LocalDateTime = LocalDateTime.of(2022, 9, 2, 0, 0),
-    @NotNull var gueltigBis: LocalDateTime = LocalDateTime.of(2022, 9, 4, 23, 59),
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @NotNull val id: Long? = null,
+    val ticketNummer: Long? = 0,
+    var typ: Typ = Typ.STANDARD,
+    var gueltigVon: LocalDateTime = LocalDateTime.of(2022, 9, 2, 0, 0),
+    var gueltigBis: LocalDateTime = LocalDateTime.of(2022, 9, 4, 23, 59),
     var preis: Double? = 240.00,
-    @NotNull var kundeId: Long? = 0
+    var kundeId: Long? = 0
 )

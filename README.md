@@ -25,7 +25,7 @@ Probleme die auf dem Branch "unrefactored" auftreten sind nachfolgend aufgeliste
 - Redundanter Code (folgt unter anderem aus ersterem)
 - Mapping findet im Service statt und läuft nicht über Mapstruct
 - Schlechte Benennung von Funktionen und Variablen
-- Keine Validierungen implementiert
+- Keine Validierungen implementiert - Tickets können unzulässig verändert werden
 - Endpoints und Controller sind nicht generisch
 - Schlechte Benennung der URI's
 - Fehlerhaftes Mapping an den Endpoints

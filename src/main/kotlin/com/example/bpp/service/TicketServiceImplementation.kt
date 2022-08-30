@@ -25,11 +25,11 @@ class TicketServiceImplementation @Autowired constructor(var ticketRepository: T
         // prüfe ob das Ticket existiert
         val ticket = ticketRepository.findByTicketNummer(ticketDto.ticketNummer!!)
             ?: throw RuntimeException("No such Element")
-        // update Ticket
+        // update Ticket - ticketnummer should not change
+        ticket.typ = Typ.valueOf(ticketDto.typ)
         ticket.gueltigBis = ticketDto.gueltigBis
         ticket.gueltigVon = ticketDto.gueltigVon
         ticket.preis = ticketDto.preis
-        ticket.typ = Typ.valueOf(ticketDto.typ)
         ticket.kundeId = ticketDto.kunde?.id
         return buildTicketDto(ticketRepository.save(ticket))
     }

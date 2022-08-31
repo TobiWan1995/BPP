@@ -11,7 +11,7 @@ import javax.validation.Valid
 
 @Service("ticketService")
 @Validated
-class TicketServiceImplementation @Autowired constructor(var ticketRepository: TicketRepository, var mockKundenService: MockKundenService): TicketService {
+class TicketServiceImplementation @Autowired constructor(private var ticketRepository: TicketRepository): TicketService {
 
     override fun retrieveTicketByTicketNummer(ticketNummer: Long): Ticket {
         // prüfe ob das Ticket existiert und return falls true
@@ -20,7 +20,7 @@ class TicketServiceImplementation @Autowired constructor(var ticketRepository: T
 
     @Transactional
     override fun saveTicketByTyp(@Valid ticket: Ticket): Ticket {
-        ticket.preis = (ticket.gueltigBis.dayOfMonth - ticket.gueltigVon.dayOfMonth)*(ticket.typ.faktor*80.0)
+        ticket.preis = (ticket.gueltigBis.dayOfMonth - ticket.gueltigVon.dayOfMonth + 1)*(ticket.typ.faktor*80.0)
         return ticketRepository.save(ticket)
     }
 

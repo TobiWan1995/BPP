@@ -9,7 +9,7 @@ import org.mapstruct.*
 import org.springframework.beans.factory.annotation.Autowired
 
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR, unmappedTargetPolicy = ReportingPolicy.WARN)
-abstract class TicketMapper @Autowired constructor(val mockKundenService: MockKundenService? = null){
+abstract class TicketMapper @Autowired constructor(private var mockKundenService: MockKundenService = MockKundenService()) {
 
     @Mapping(source = "kundeId", target = "kunde", qualifiedByName = ["addKundeToTicketDto"])
     abstract fun mapTicketToDto(ticket: Ticket): TicketDto
@@ -20,6 +20,6 @@ abstract class TicketMapper @Autowired constructor(val mockKundenService: MockKu
 
     @Named("addKundeToTicketDto")
     fun addKundeToTicketDto(id: Long): Kunde {
-        return mockKundenService?.retrieveKundeByIdFromMockApi(id) ?: throw RuntimeException("No matching Kunde found")
+        return mockKundenService.retrieveKundeByIdFromMockApi(id) ?: throw RuntimeException("No matching Kunde found")
     }
 }

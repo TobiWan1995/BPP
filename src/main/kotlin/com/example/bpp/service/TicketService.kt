@@ -1,13 +1,13 @@
 package com.example.bpp.service
 
-import com.example.bpp.model.TicketDto
+import com.example.bpp.model.Ticket
 
 interface TicketService {
-    fun getTicket(ticketNummer: Long): TicketDto
+    fun retrieveTicketByTicketNummer(ticketNummer: Long): Ticket
 
-    fun saveTicket(ticketDto: TicketDto): TicketDto
+    fun saveTicketByTyp(ticket: Ticket): Ticket
 
-    fun updateTicket(ticketDto: TicketDto): TicketDto
+    fun updateTicketByTyp(ticket: Ticket): Ticket
 
-    fun deleteTicket(ticketNummer: Long)
+    fun deleteTicketByTicketNummer(ticketNummer: Long)
 }

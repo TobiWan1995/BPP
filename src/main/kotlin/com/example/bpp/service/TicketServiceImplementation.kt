@@ -3,8 +3,6 @@ package com.example.bpp.service
 import com.example.bpp.db.TicketRepository
 import com.example.bpp.mockKundenApi.MockKundenService
 import com.example.bpp.model.Ticket
-import com.example.bpp.model.TicketDto
-import com.example.bpp.model.Typ
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -12,36 +10,33 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class TicketServiceImplementation @Autowired constructor(var ticketRepository: TicketRepository, var mockKundenService: MockKundenService): TicketService {
 
-    override fun getTicket(ticketNummer: Long): TicketDto {
-        val ticket = ticketRepository.findByTicketNummer(ticketNummer) ?: throw RuntimeException("No such Element")
-        return buildTicketDto(ticket)
+    override fun retrieveTicketByTicketNummer(ticketNummer: Long): Ticket {
+        // prüfe ob das Ticket existiert und return falls true
+        return ticketRepository.findByTicketNummer(ticketNummer) ?: throw RuntimeException("No such Element")
     }
+
     @Transactional
-    override fun saveTicket(ticketDto: TicketDto): TicketDto {
-        val ticket = ticketRepository.save(Ticket(null, ticketDto.ticketNummer, Typ.valueOf(ticketDto.typ), ticketDto.gueltigVon, ticketDto.gueltigBis, ticketDto.preis, ticketDto.kunde?.id))
-        return buildTicketDto(ticket)
+    override fun saveTicketByTyp(ticket: Ticket): Ticket {
+        ticket.preis = (ticket.gueltigBis.dayOfMonth - ticket.gueltigVon.dayOfMonth)*(ticket.typ.faktor*80.0)
+        return ticketRepository.save(ticket)
     }
+
     @Transactional
-    override fun updateTicket(ticketDto: TicketDto): TicketDto {
+    override fun updateTicketByTyp(updatedTicket: Ticket): Ticket {
         // prüfe ob das Ticket existiert
-        val ticket = ticketRepository.findByTicketNummer(ticketDto.ticketNummer!!)
+        val oldTicket = ticketRepository.findByTicketNummer(updatedTicket.ticketNummer)
             ?: throw RuntimeException("No such Element")
-        // update Ticket - ticketnummer should not change
-        ticket.typ = Typ.valueOf(ticketDto.typ)
-        ticket.gueltigBis = ticketDto.gueltigBis
-        ticket.gueltigVon = ticketDto.gueltigVon
-        ticket.preis = ticketDto.preis
-        ticket.kundeId = ticketDto.kunde?.id
-        return buildTicketDto(ticketRepository.save(ticket))
+        // update Ticket
+        updatedTicket.id = oldTicket.id
+        updatedTicket.ticketNummer = oldTicket.ticketNummer
+        updatedTicket.preis = (updatedTicket.gueltigBis.dayOfMonth - updatedTicket.gueltigVon.dayOfMonth)*(updatedTicket.typ.faktor*80.0)
+        return ticketRepository.save(updatedTicket)
     }
+
     @Transactional
-    override fun deleteTicket(ticketNummer: Long) {
+    override fun deleteTicketByTicketNummer(ticketNummer: Long) {
         // prüfe ob das Ticket existiert
         val ticket = ticketRepository.findByTicketNummer(ticketNummer) ?: throw RuntimeException("No such Element")
         ticketRepository.deleteById(ticket.id!!)
-    }
-
-    fun buildTicketDto(ticket: Ticket): TicketDto {
-        return TicketDto(ticket.ticketNummer!!, ticket.typ.name, ticket.gueltigVon, ticket.gueltigBis, ticket.preis, mockKundenService.retrieveKundeByIdFromMockApi(ticket.kundeId))
     }
 }

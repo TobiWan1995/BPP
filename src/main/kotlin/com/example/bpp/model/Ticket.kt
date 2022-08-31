@@ -15,11 +15,11 @@ import javax.persistence.Id
 * den Typ jedes Tickets über den entsprechenden Faktor berechnet im Backend berechnet.*/
 @Entity
 class Ticket(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @NotNull val id: Long? = null,
-    val ticketNummer: Long? = 0,
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @NotNull var id: Long? = null,
+    var ticketNummer: Long = 0,
     var typ: Typ = Typ.STANDARD,
     var gueltigVon: LocalDateTime = LocalDateTime.of(2022, 9, 2, 0, 0),
     var gueltigBis: LocalDateTime = LocalDateTime.of(2022, 9, 4, 23, 59),
     var preis: Double? = 240.00,
-    var kundeId: Long? = 0
+    var kundeId: Long = 0
 )

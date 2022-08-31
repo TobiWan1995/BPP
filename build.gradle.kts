@@ -27,6 +27,9 @@ dependencies {
 	implementation("org.mapstruct:mapstruct-processor:1.5.2.Final")
 	implementation("org.mapstruct:mapstruct:1.5.2.Final")
 	implementation("org.springframework.boot:spring-boot-starter-validation:2.7.3")
+	implementation("org.springdoc:springdoc-openapi-data-rest:1.6.0")
+	implementation("org.springdoc:springdoc-openapi-ui:1.6.0")
+	implementation("org.springdoc:springdoc-openapi-kotlin:1.6.0")
 	runtimeOnly("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

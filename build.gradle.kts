@@ -5,6 +5,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 	kotlin("jvm") version "1.6.21"
 	kotlin("plugin.spring") version "1.6.21"
+	kotlin("kapt") version "1.7.10"
 }
 
 group = "com.example"
@@ -16,12 +17,15 @@ repositories {
 }
 
 dependencies {
+	kapt("org.springframework.boot:spring-boot-configuration-processor:2.7.1")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.springframework.data:spring-data-jpa:2.7.2")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.mapstruct:mapstruct-processor:1.5.2.Final")
+	implementation("org.mapstruct:mapstruct:1.5.2.Final")
 	runtimeOnly("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

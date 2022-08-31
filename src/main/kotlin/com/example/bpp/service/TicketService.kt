@@ -7,7 +7,7 @@ interface TicketService {
 
     fun saveTicketByTyp(ticket: Ticket): Ticket
 
-    fun updateTicketByTyp(ticket: Ticket): Ticket
+    fun updateTicketByTyp(updatedTicket: Ticket): Ticket
 
     fun deleteTicketByTicketNummer(ticketNummer: Long)
 }

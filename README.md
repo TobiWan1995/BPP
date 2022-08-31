@@ -19,7 +19,7 @@ werden über ein Typ-Attribut differenziert.
 
 Probleme die auf dem Branch "unrefactored" auftreten sind nachfolgend aufgelistet.
 
-**Code-Practice**
+**Code-Practice und Architektur**
 
 - Business-Logik in den Controllern
 - Redundanter Code (folgt unter anderem aus ersterem)

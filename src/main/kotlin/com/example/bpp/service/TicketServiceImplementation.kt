@@ -7,6 +7,7 @@ import com.example.bpp.model.TicketDto
 import com.example.bpp.model.Typ
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class TicketServiceImplementation @Autowired constructor(var ticketRepository: TicketRepository, var mockKundenService: MockKundenService): TicketService {
@@ -15,12 +16,12 @@ class TicketServiceImplementation @Autowired constructor(var ticketRepository: T
         val ticket = ticketRepository.findByTicketNummer(ticketNummer) ?: throw RuntimeException("No such Element")
         return buildTicketDto(ticket)
     }
-
+    @Transactional
     override fun saveTicket(ticketDto: TicketDto): TicketDto {
         val ticket = ticketRepository.save(Ticket(null, ticketDto.ticketNummer, Typ.valueOf(ticketDto.typ), ticketDto.gueltigVon, ticketDto.gueltigBis, ticketDto.preis, ticketDto.kunde?.id))
         return buildTicketDto(ticket)
     }
-
+    @Transactional
     override fun updateTicket(ticketDto: TicketDto): TicketDto {
         // prüfe ob das Ticket existiert
         val ticket = ticketRepository.findByTicketNummer(ticketDto.ticketNummer!!)
@@ -33,7 +34,7 @@ class TicketServiceImplementation @Autowired constructor(var ticketRepository: T
         ticket.kundeId = ticketDto.kunde?.id
         return buildTicketDto(ticketRepository.save(ticket))
     }
-
+    @Transactional
     override fun deleteTicket(ticketNummer: Long) {
         // prüfe ob das Ticket existiert
         val ticket = ticketRepository.findByTicketNummer(ticketNummer) ?: throw RuntimeException("No such Element")

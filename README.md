@@ -1,5 +1,5 @@
 # Entwicklung eines stand. Micro-Service in Kotlin
-Im Rahmen der Berufspratkische-Phase an der Technischen Hochschule Mittelhessen, dient dieses Projekt
+Im Rahmen der Berufspratkischen-Phase an der Technischen Hochschule Mittelhessen, dient dieses Projekt
 als Veranschaulichung der Aufgaben während des Praktikums im Unternehmen IT-Frankfurt GmbH.
 
 Während des Praktikums soll ein Rest-Service in einen standardisierten Micro-Service refactored werden.

@@ -26,6 +26,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.mapstruct:mapstruct-processor:1.5.2.Final")
 	implementation("org.mapstruct:mapstruct:1.5.2.Final")
+	implementation("org.springframework.boot:spring-boot-starter-validation:2.7.3")
 	runtimeOnly("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

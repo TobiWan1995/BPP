@@ -16,12 +16,12 @@ class TicketController @Autowired constructor(val ticketService: TicketService, 
     }
 
     @PostMapping("/{typ}")
-    fun createTicketByTyp(@RequestBody @PathVariable("typ") ticketDto: TicketDto): TicketDto {
+    fun createTicketByTyp(@RequestBody ticketDto: TicketDto): TicketDto {
         return ticketMapper.mapTicketToDto(ticketService.saveTicketByTyp(ticketMapper.mapDtoToTicket(ticketDto)))
     }
 
     @PutMapping("/{typ}")
-    fun updateTicketByTyp(@RequestBody @PathVariable("typ") ticketDto: TicketDto): TicketDto {
+    fun updateTicketByTyp(@RequestBody ticketDto: TicketDto): TicketDto {
         return ticketMapper.mapTicketToDto(ticketService.updateTicketByTyp(ticketMapper.mapDtoToTicket(ticketDto)))
     }
 

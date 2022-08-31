@@ -6,8 +6,11 @@ import com.example.bpp.model.Ticket
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.validation.annotation.Validated
+import javax.validation.Valid
 
-@Service
+@Service("ticketService")
+@Validated
 class TicketServiceImplementation @Autowired constructor(var ticketRepository: TicketRepository, var mockKundenService: MockKundenService): TicketService {
 
     override fun retrieveTicketByTicketNummer(ticketNummer: Long): Ticket {
@@ -16,20 +19,20 @@ class TicketServiceImplementation @Autowired constructor(var ticketRepository: T
     }
 
     @Transactional
-    override fun saveTicketByTyp(ticket: Ticket): Ticket {
+    override fun saveTicketByTyp(@Valid ticket: Ticket): Ticket {
         ticket.preis = (ticket.gueltigBis.dayOfMonth - ticket.gueltigVon.dayOfMonth)*(ticket.typ.faktor*80.0)
         return ticketRepository.save(ticket)
     }
 
     @Transactional
-    override fun updateTicketByTyp(updatedTicket: Ticket): Ticket {
+    override fun updateTicketByTyp(@Valid updatedTicket: Ticket): Ticket {
         // prüfe ob das Ticket existiert
         val oldTicket = ticketRepository.findByTicketNummer(updatedTicket.ticketNummer)
             ?: throw RuntimeException("No such Element")
         // update Ticket
-        updatedTicket.id = oldTicket.id
-        updatedTicket.ticketNummer = oldTicket.ticketNummer
-        updatedTicket.preis = (updatedTicket.gueltigBis.dayOfMonth - updatedTicket.gueltigVon.dayOfMonth)*(updatedTicket.typ.faktor*80.0)
+        updatedTicket.id = oldTicket.id // should not change
+        updatedTicket.ticketNummer = oldTicket.ticketNummer // should not change
+        updatedTicket.preis = (updatedTicket.gueltigBis.dayOfMonth - updatedTicket.gueltigVon.dayOfMonth + 1)*(updatedTicket.typ.faktor*80.0)
         return ticketRepository.save(updatedTicket)
     }
 

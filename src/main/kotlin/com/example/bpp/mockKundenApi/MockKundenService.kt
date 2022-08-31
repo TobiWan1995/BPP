@@ -17,6 +17,7 @@ class MockKundenService {
 
     // Mock-Funktion um Daten aus dem Kunde-Service zu erhalten
     fun retrieveKundeByIdFromMockApi(id: Long?): Kunde? {
-        return mockKundenDb.first { kunde -> kunde.id == id }
+        val kunde = mockKundenDb.first { kunde -> kunde.id == id }
+        return kunde
     }
 }

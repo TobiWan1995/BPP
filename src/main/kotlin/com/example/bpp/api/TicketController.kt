@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/ticket")
-class TicketController @Autowired constructor(val ticketService: TicketService, val ticketMapper: TicketMapper) {
+class TicketController @Autowired constructor(private val ticketService: TicketService, private val ticketMapper: TicketMapper) {
 
     @GetMapping("/{nummer}")
     fun retrieveTicketByTicketNummer(@PathVariable("nummer") ticketNummer: Long): TicketDto {

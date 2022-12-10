@@ -44,7 +44,7 @@ des Microservice. Dabei müssen diese Daten immer wieder synchronisiert werden, 
 (Create, Update, Delete) im anderen Service ergibt. Dadurch sind Daten im Worst-Case nur nicht aktuell aber jeder
 Service in seiner Funktion diskret und Daten des jeweiligen Service nicht voneinander nur abhängig.
 
-> Database per Service und bspw. Event als Ergänzung
+> Database per Service Pattern und bspw. Event Driven als Ergänzung
 
 Ein weiterer interessanter Lösungsansatz ist die Verwendung von GraphQL. Dadurch können Daten im Backend
 so reduziert werden das diese lediglich über eine ID aufeinander verweisen und im Frontend in eigeneständige 
